@@ -31,55 +31,21 @@ class DataSource {
         $connection = new PDO("oci:dbname=".$db, 'alexandr', 'alexandr');
         return $connection;
     }
-
-       /**
-     * To read database.
-     *
-     * @param string $query
-     * @param string $paramType
-     * @param array $paramArray
-     * @return array
-     */
-    public function select($query, $paramType = "", $paramArray = array())
-    {
-        $statement = $this->execute($query, $paramType, $paramArray);
-        $result = $statement->get_result();
-        
-        if ($result->num_rows > 0) {
-            $resultset = null;
-            while ($row = $result->fetch_assoc()) {
-                $resultset[] = $row;
-            }
-            return $resultset;
+    
+    private function runQuery($query, $paramArray) {
+        $statement = $this->connection->prepare($query);
+        foreach ($paramArray as $key => $value) {
+            $statement->bindValue($key, $value);
         }
+        $statement->execute();
+        return $statement;
     }
-    
-    public function insert($query, $paramType, $paramArray)
-    {
-        $statement = $this->execute($query, $paramType, $paramArray);
-        return $statement->insert_id;
+
+    public function insert($query, $paramArray) {
+        $statement = $this->runQuery($query, $paramArray);
+        return $statement->rowCount(); // Return the number of affected rows
     }
-    
-    public function update($query, $paramType, $paramArray)
-    {
-        $statement = $this->execute($query, $paramType, $paramArray);
-        $affectedRows = $statement->affected_rows;
-        return $affectedRows;
-    }
-    
-    public function delete($query, $paramType, $paramArray)
-    {
-        $statement = $this->execute($query, $paramType, $paramArray);
-        $affectedRows = $statement->affected_rows;
-        return $affectedRows;
-    }
-    
-    public function getRecordCount($query, $paramType = "", $paramArray = array())
-    {
-        $statement = $this->execute($query, $paramType, $paramArray);
-        $statement->store_result();
-        return $statement->num_rows;
-    }
+      
 }
 
 ?>
