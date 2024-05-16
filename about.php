@@ -1,3 +1,15 @@
+<?php
+  if (!isset($_SESSION['user'])) {
+    session_start();
+  }
+  if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+    header('Location: ./login');
+    exit();
+  }
+
+  $userid = $_SESSION['user'];
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -54,41 +66,15 @@
 
 <div id="main">
 <!-- header begins -->
-<div id="header">
-	<div id="buttons">
-        <a href="login.html" class="but"  title="">Login</a><div class="but_razd"></div>
-      <a href="products.html" class="but" title="">Products</a><div class="but_razd"></div>
-      <a href="about.html"  class="but" title="">About us</a><div class="but_razd"></div>
-      <a href="contact.html" class="but" title="">Contact us</a>
-    </div>
-	<div id="logo">
-    	<b><a href="#">BMCC ELECTRONICS</a></b>
-      	<h2><a href="#"><small>Small Company Slogan Goes Here</small></a></h2>
-    </div>
-   
-</div>
+<?php
+    include './components/header.php';
+    ?>
 <!-- header ends -->
-    <div class="top">
-    	
-		<div id="slider-wrapper">        
-            <div id="slider" class="nivoSlider">
-                <img src="images/top.jpg" alt="" />
-                <img src="images/top2.jpg" alt=""/>
-                <img src="images/top3.jpg" alt="" />
-            </div>
-			        
-        </div>
-
-<script type="text/javascript" src="lib/jquery-1.4.3.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.nivo.slider.pack.js"></script>
-    <script type="text/javascript">
-    $(window).load(function() {
-        $('#slider').nivoSlider();
-    });
-    </script>
-		
-    </div>
-    <div style="height:10px"></div>
+<!-- slider begins -->
+    <?php
+    include './components/slider.php';
+    ?>
+<!-- slider ends -->
         <!-- content begins -->
        			<div id="content" style="border:solid darkred 15px;">
                 	
@@ -115,29 +101,11 @@
                     
         		</div>
     <!-- content ends --> 
-    <div style="height:15px"></div>
-    <!-- bottom begin -->
-    <div id="bottom_bot">
-    <div id="bottom">
-      <div style="clear: both; height:20px;"></div>
-    </div>
-    </div>
+<!-- bottom begin -->
+<?php
+    include './components/footer.php';
+    ?>
 <!-- bottom end --> 
-<!-- footer begins -->
-            <div id="footer">
-          		<div style="float: left; width: 500;">
-                	Copyright  2011. <!-- Do not remove -->Designed by <a href="http://www.metamorphozis.com/free_templates/free_templates.php" title="Free Web Templates">Free Web Templates</a>, coded by <a href="http://www.myfreecsstemplates.com/" title="Free CSS Templates">Free CSS Templates</a><!-- end --><br />
-                	<a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" title="This page validates as CSS"><abbr title="Cascading Style Sheets">CSS</abbr></a>
-             	</div>
-                <div style="float: right; width: 500; padding: 0px 0px 0px 0px;">
-                	<a href="#"><img src="images/fu_i5.gif" class="fu_i" alt="" /></a>
-                    <a href="#"><img src="images/fu_i4.gif" class="fu_i" alt="" /></a>
-                    <a href="#"><img src="images/fu_i3.gif" class="fu_i" alt="" /></a>
-                    <a href="#"><img src="images/fu_i2.gif" class="fu_i" alt="" /></a>
-                    <a href="#"><img src="images/fu_i1.gif" class="fu_i" alt="" /></a>
-                </div>
-             </div>
-        <!-- footer ends -->
 </div>
 
 
