@@ -1,5 +1,11 @@
 <?php
-  header('Location: ./login') ;
+  session_start();
+  if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+    header('Location: ./login');
+    exit();
+  }
+
+  $userid = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -14,15 +20,19 @@
 </head>
 <body>
 
+<?php
+  echo "<div>Hello $userid</div>"
+?>
+
 <div id="main">
 <!-- header begins -->
 <?php
-    include '../components/header.php';
+    include './components/header.php';
     ?>
 <!-- header ends -->
 <!-- slider begins -->
     <?php
-    include '../components/slider.php';
+    include './components/slider.php';
     ?>
 <!-- slider ends -->
         <!-- content begins -->
@@ -69,8 +79,6 @@
                    	  <div style="height:3px"></div>
                         Cras malesuada, libero ut lobortis faucibus, felis tellus fermentum lacus, euismod tristique nisi risus dapibus felis. Curabitur sit amet nibh vitae ante fermentum lobortis vitae nec mauris. Fusce eget turpis diam. Vestibulum convallis vestibulum volutpat. Nam in elementum mi.
                         <a href="#"><img src="images/a_fish.gif" alt="" /></a>
-                        
-                        
                   </div>
                     <div style="clear:both"></div>
                     
@@ -79,7 +87,7 @@
     <!-- content ends --> 
 <!-- bottom begin -->
 <?php
-    include '../components/footer.php';
+    include './components/footer.php';
     ?>
 <!-- bottom end --> 
 </div>

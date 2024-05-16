@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form values
     $userid = $_POST['userid'];
     $password = $_POST['password'];
-    $password_again = $_POST['password_again'];
 
     // Validate userid
     if (!$userid) {
@@ -20,38 +19,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Input password!";
     }
 
-    if ($password !== $password_again) {
-        $errors[] = "Passwords do not match!";
-    }
-
     // Check if there are any errors
     if (empty($errors)) {
-        // If no errors, proceed with registration
+        // If no errors, proceed with login
         $dataSource = new DataSource();
 
-        // Prepare and execute insert query
-        $query = "INSERT INTO login (userid, password) VALUES (:userid, :password)";
+        // Prepare and execute select query
+        $query = "SELECT userid, password FROM login WHERE userid = :userid";
         $params = [
             ':userid' => $userid,
-            ':password' => password_hash($password, PASSWORD_DEFAULT) // Hash the password
         ];
 
         try {
             $result = $dataSource->runQuery($query, $params);
-            header('Location: ../views/success.php');
-            exit(); // Always exit after redirection
-        } catch (PDOException $e) {
-            if ($e->getCode() == 'HY000' && strpos($e->getMessage(), 'ORA-00001') !== false) {
-                $errors[] = 'Username already exists!';
+            $user = $result->fetch(PDO::FETCH_ASSOC);
+            if ($user && password_verify($password, $user['PASSWORD'])) {
+                // Login successful
+                session_start();
+                $_SESSION['user'] = $user['USERID']; // Store userid in session
+                header('Location: ../../');
+                exit();
             } else {
-                $errors[] = 'Failed to register user: ' . $e->getMessage();
+                $errors[] = 'Invalid username or password!';
             }
+        } catch (PDOException $e) {
+            $errors[] = 'Failed to login: ' . $e->getMessage();
         }
     }
 
     // Store errors in session
     session_start();
-    $_SESSION['registration_errors'] = $errors;
+    $_SESSION['login_errors'] = $errors;
 
     // Redirect to error.php
     header('Location: ../views/error.php');

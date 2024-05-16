@@ -32,20 +32,14 @@ class DataSource {
         return $connection;
     }
     
-    private function runQuery($query, $paramArray) {
+    public function runQuery($query, $paramArray) {
         $statement = $this->connection->prepare($query);
         foreach ($paramArray as $key => $value) {
             $statement->bindValue($key, $value);
         }
         $statement->execute();
         return $statement;
-    }
-
-    public function insert($query, $paramArray) {
-        $statement = $this->runQuery($query, $paramArray);
-        return $statement->rowCount(); // Return the number of affected rows
-    }
-      
+    } 
 }
 
 ?>

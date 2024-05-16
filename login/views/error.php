@@ -123,19 +123,18 @@
             <div class="hh1">REGISTRATION</div>
             <p>&nbsp;</p>
             <!-- -------------------------------------------------  -->
-            <form action="../model/register.php" method="post" style="font-size: 1.5em;">
-                <div class="form_settings">
-                    <p><span>Username:</span><input class="contact" type="text" name="userid" /></p>
-                    <p><span>Password:</span><input class="contact" type="password" name="password" value="" /></p>
-                    <p><span>Password Again:</span><input class="contact" type="password" name="password_again" value="" /></p>
-                    <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit" />
-                    <br><span>&nbsp;</span><a style="margin-left:20px" href="/redleaves/login">Login</a>
-                    </p>
-                </div>
+            <form action="../model/login.php" method="post" style="font-size: 1.5em;">
+            <div class="form_settings">
+                <p><span>Username:</span><input class="contact" type="text" name="userid" /></p>
+                <p><span>Password:</span><input class="contact" type="password" name="password" value="" /></p>
+                <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit" />
+                    <br><span>&nbsp;</span><a style="margin-left:20px" href="/redleaves/registration">Register</a>
+                </p>
+            </div>
             </form>
             <?php
-                $errors = isset($_SESSION['registration_errors']) ? $_SESSION['registration_errors'] : [];
-                unset($_SESSION['registration_errors']); // Clear errors from session
+                $errors = isset($_SESSION['login_errors']) ? $_SESSION['login_errors'] : [];
+                unset($_SESSION['login_errors']); // Clear errors from session
 
                 // Display errors
                 if (!empty($errors)) {

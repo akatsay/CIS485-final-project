@@ -122,7 +122,7 @@
     <div class="hh1">LOGIN</div>
     <p>&nbsp;</p>
     <!-- -------------------------------------------------  -->
-    <form action="#" method="post" style="font-size: 1.5em;">
+    <form action="./model/login.php" method="post" style="font-size: 1.5em;">
         <div class="form_settings">
             <p><span>Username:</span><input class="contact" type="text" name="userid" /></p>
             <p><span>Password:</span><input class="contact" type="password" name="password" value="" /></p>
