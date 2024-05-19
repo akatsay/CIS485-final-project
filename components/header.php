@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <a href="/redleaves/products" class="but" title="">Products</a><div class="but_razd"></div>
         <a href="/redleaves/about.php" class="but" title="">About us</a><div class="but_razd"></div>
+        <a href="/redleaves/cart" class="but" title="">Cart</a><div class="but_razd"></div>
     </div>
     <div id="logo">
         <b><a href="/redleaves">BMCC ELECTRONICS</a></b>

@@ -12,19 +12,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $dataSource = new DataSource();
 
-    // Prepare and execute insert query
-    $query = "INSERT INTO cart (userid, code, quantity, price) VALUES (:userid, :code, :quantity, :price)";
+    // Check if the item is already in the cart
+    $query = "SELECT quantity FROM cart WHERE userid = :userid AND code = :code";
     $params = [
         ':userid' => $userid,
-        ':code' => $code,
-        ':quantity' => 1,
-        ':price' => $price
+        ':code' => $code
     ];
 
     try {
         $result = $dataSource->runQuery($query, $params);
-        // header('Location: ../views/success.php');
-        // exit(); // Always exit after redirection
+        $item = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($item) {
+            // If the item exists, update the quantity
+            $newQuantity = $item['QUANTITY'] + 1;
+            $updateQuery = "UPDATE cart SET quantity = :quantity WHERE userid = :userid AND code = :code";
+            $updateParams = [
+                ':quantity' => $newQuantity,
+                ':userid' => $userid,
+                ':code' => $code
+            ];
+            $dataSource->runQuery($updateQuery, $updateParams);
+        } else {
+            // If the item does not exist, insert a new row
+            $insertQuery = "INSERT INTO cart (userid, code, quantity, price) VALUES (:userid, :code, :quantity, :price)";
+            $insertParams = [
+                ':userid' => $userid,
+                ':code' => $code,
+                ':quantity' => 1,
+                ':price' => $price
+            ];
+            $dataSource->runQuery($insertQuery, $insertParams);
+        }
+
+        header('Location: ..');
+        exit(); // Always exit after redirection
     } catch (PDOException $e) {
         echo 'Error adding item to cart';
     }

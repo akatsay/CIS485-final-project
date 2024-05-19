@@ -16,6 +16,14 @@
     } catch (PDOException $e) {
         $errors[] = 'Failed to fetch items: ' . $e->getMessage();
     }
+
+    // Calculate total price
+    $totalPrice = 0;
+    if (!empty($items)) {
+        foreach ($items as $item) {
+            $totalPrice += $item['PRICE'] * $item['QUANTITY'];
+        }
+    }
 ?>
 
 <?php if (!empty($items)): ?>
@@ -29,15 +37,24 @@
             <div class="title"><?= htmlspecialchars($item['NAME']) ?></div>
             <p class="size">
                 <?= htmlspecialchars($item['DESCRIPTION']) ?>
-                <a href="./views/single.php?code=<?= htmlspecialchars($item['CODE']) ?>">More...</a><br />
+                <a href="../products/views/single.php?code=<?= htmlspecialchars($item['CODE']) ?>">More...</a><br />
                 <span style="float: right; text-align: left; padding: .5em;">
-                    <!-- <a href="/addToCart.php?code=<?= htmlspecialchars($item['CODE']) ?>?price=<?= htmlspecialchars($item['PRICE']) ?>">Add to Cart</a>&nbsp;&nbsp;
-                    <a href="../../cart.php">Goto Cart</a> -->
+                <form method="POST" action="./model/modifyQty.php">
+                    <input type="hidden" name="code" value="<?= htmlspecialchars($item['CODE']) ?>">
+                    <button type="submit" name="action" value="decrement">-</button>
+                    <button type="submit" name="action" value="increment">+</button>
+                    <button type="submit" name="action" value="remove">remove</button>
+                </form>
+                <p>Quantity: <?= htmlspecialchars($item['QUANTITY']) ?></p>
                 </span>
             </p>
-            <div class="price">Price: $<?= number_format($item['PRICE'], 2) ?></div>
+            <div class="price">Price: $<?= number_format($item['PRICE'] * number_format($item['QUANTITY']), 2) ?></div>
         </div>
     <?php endforeach; ?>
+    <div style="clear: both;"></div>
+    <div style="border: solid darkgreen 2px; background: #F9F9F9; margin: 10px; padding: 10px;">
+        <strong>Total Price: $<?= number_format($totalPrice, 2) ?></strong>
+    </div>
     <form action="./model/finish.php" method="delete">
         <input type="submit" value="BUY" class="but" title="BUY">
     </form>
