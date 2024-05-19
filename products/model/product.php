@@ -35,8 +35,8 @@ if(isset($_GET['code'])) {
             <?= htmlspecialchars($item['DESCRIPTION']) ?>
             <br />
             <span style="float:right;text-align:left;padding:.5em;">
-                <a href="/add_to_cart.php?code=<?= htmlspecialchars($item['CODE']) ?>">Add to Cart</a>&nbsp;&nbsp;
-                <a href="/view_cart.php">Goto Cart</a>
+                <a href="../model/addToCart.php?code=<?= htmlspecialchars($item['CODE']) ?>&price=<?= htmlspecialchars($item['PRICE']) ?>">Add to Cart</a>&nbsp;&nbsp;
+                <a href="../../cart">Goto Cart</a>
             </span>
             </p>
         

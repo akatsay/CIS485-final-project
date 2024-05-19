@@ -17,7 +17,7 @@
 <title>MyFreeCssTemplates.com free CSS template</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="../styles.css" rel="stylesheet" type="text/css" />
+<link href="../../styles.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
 <style>
     .title
@@ -67,31 +67,23 @@
 <div id="main">
 <!-- header begins -->
 <?php
-    include '../components/header.php';
+    include '../../components/header.php';
     ?>
 <!-- header ends -->
 <!-- slider begins -->
     <?php
-    include '../components/slider.php';
+    include '../../components/slider.php';
     ?>
 <!-- slider ends -->   
         <!-- content begins -->
-       			<div id="content"  style="border:solid darkred 15px;">
-                	
-                    <div class="hh1">CART</div>
-                    <p>&nbsp;</p>
-                    <!-- -------------------------------------------------  -->
-                    <?php
-                    include './model/cart.php'
-                    ?>
-                    <!-- -------------------------------------------------  -->
-                    <div style="clear:both"></div>
-                    
-                    
-        		</div>
+            <div id="content"  style="border:solid darkred 15px;">
+                
+                <div class="hh1">THANK YOU FOR YOUR PURCHASE!</div>
+                
+            </div>
 <!-- bottom begin -->
 <?php
-    include '../components/footer.php';
+    include '../../components/footer.php';
     ?>
 <!-- bottom end --> 
 </div>
